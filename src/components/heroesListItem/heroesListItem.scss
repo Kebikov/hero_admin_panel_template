@@ -1,0 +1,14 @@
+.fede {
+    transition:all 0.3s ease;
+    animation: somename 1s;
+}
+
+@keyframes somename {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
