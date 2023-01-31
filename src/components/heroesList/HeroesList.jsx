@@ -10,17 +10,16 @@ import Spinner from '../spinner/Spinner';
 const HeroesList = () => {
     const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
 
-
     const heroesMemo = createSelector(
         (state) => state.filters.activeFilter,
         (state) => state.heroes.heroes,
 
         (activeFilter, heroes) => {
-            console.log('heroesMemo');
             if(activeFilter === 'all') {
-                }else{
-                    return heroes.filter(item => item.element === activeFilter);
-                }
+                return heroes;
+            }else{
+                return heroes.filter(item => item.element === activeFilter);
+            }
         }
     );
 
@@ -30,7 +29,7 @@ const HeroesList = () => {
     const {request} = useHttp();
 
     useEffect(() => {
-        dispatch(heroesFetching());
+        dispatch(heroesFetching);
         request("http://localhost:3001/heroes")
         .then(data => dispatch(heroesFetched(data)))
         .catch(() => dispatch(heroesFetchingError()));
@@ -44,13 +43,16 @@ const HeroesList = () => {
     }
 
     const renderHeroesList = (arr) => {
-        if (arr.length === 0) {
-            return <h5 className="text-center mt-5">Героев пока нет</h5>
+        if(Array.isArray(arr)) {
+            if (arr.length === 0) {
+                return <h5 className="text-center mt-5">Героев пока нет</h5>
+            }
+            return arr.map(({id, ...props}) => {
+                return <HeroesListItem key={id} dataId={id} {...props}/>
+            })
+        }else{
+            return [];
         }
-
-        return arr.map(({id, ...props}) => {
-            return <HeroesListItem key={id} dataId={id} {...props}/>
-        })
     }
 
     const elements = renderHeroesList(heroesCurrent);
