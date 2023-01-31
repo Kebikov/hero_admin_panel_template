@@ -19,10 +19,16 @@
       "element": "water"
     },
     {
-      "id": "91a152b4-da68-4f18-ae34-4dc56671bc28",
-      "name": "ghfddfgsdf",
-      "text": "dsfdfs",
+      "id": "1383e5a6-162d-4a72-9221-743c1dc26eec",
+      "name": "lox-1",
+      "text": "dfg",
       "element": "Я владею элементом..."
+    },
+    {
+      "id": "77427263-558b-439a-aec1-7f4f8ab8cf36",
+      "name": "dfgdf",
+      "text": "dfgdf",
+      "element": "water"
     }
   ],
   "filters": [

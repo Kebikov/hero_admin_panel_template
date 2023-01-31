@@ -3,7 +3,7 @@ import { useHttp } from '../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
 import { heroesPost } from '../../actions';
 import { v4 as uuidv4 } from 'uuid';
-import { heroesFetching, heroesFetchingError, filtersFetched } from '../../actions';
+import { fetchFilters } from '../../actions';
 
 
 const HeroesAddForm = () => {
@@ -14,10 +14,7 @@ const HeroesAddForm = () => {
     const {request} = useHttp();
 
     const getFilters = useCallback(() => {
-        dispatch(heroesFetching());
-        request("http://localhost:3001/filters")
-        .then(data => dispatch(filtersFetched(data)))
-        .catch(() => dispatch(heroesFetchingError()));
+        dispatch(fetchFilters(request));
     }, [request]);
 
     const options = useSelector(state => state.filters.filters);
@@ -30,6 +27,7 @@ const HeroesAddForm = () => {
         const text = form.text.value;
         const element = form.element.value;
         const id = uuidv4();
+        
         request("http://localhost:3001/heroes", "POST", JSON.stringify({id,name,text,element}))
         .then(data => dispatch(heroesPost()))
         .catch(err => console.log('POST Error >>> ',err));
