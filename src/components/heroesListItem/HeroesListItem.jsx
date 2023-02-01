@@ -1,8 +1,9 @@
 import './heroesListItem.scss';
 import { useHttp } from "../../hooks/http.hook";
 import { useDispatch } from 'react-redux';
-import { heroesDelete } from '../../actions';
 import { useCallback } from "react";
+
+import { heroesDelete } from '../../actions';
 
 const HeroesListItem = ({name, description, element, dataId}) => {
 

@@ -11,8 +11,8 @@ const App = () => {
             <div className="content">
                 <HeroesList/>
                 <div className="content__interactive">
-                    <HeroesAddForm/>
-                    <HeroesFilters/>
+                    {/* <HeroesAddForm/>
+                    <HeroesFilters/> */}
                 </div>
             </div>
         </main>

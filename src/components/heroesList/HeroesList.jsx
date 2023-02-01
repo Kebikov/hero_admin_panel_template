@@ -1,13 +1,24 @@
-import {useHttp} from '../../hooks/http.hook';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createSelector } from 'reselect';
-import { fetchHeroes } from '../../actions';
-import HeroesListItem from "../heroesListItem/HeroesListItem";
+import { createSelector } from '@reduxjs/toolkit';
 import Spinner from '../spinner/Spinner';
+import HeroesListItem from "../heroesListItem/HeroesListItem";
+import { useHttp } from '../../hooks/http.hook';
+//* redux 
+import { fetchHeroes } from './heroesSlice';
+
 
 //= HeroesList 
 const HeroesList = () => {
+    useEffect(() => {
+        console.log('use Effect',);
+        dispatch(fetchHeroes());
+    }, []);
+
+    const {request} = useHttp();
+
+    const dispatch = useDispatch();
+
     const heroesLoadingStatus = useSelector(state => state.heroes.heroesLoadingStatus);
 
     const heroesMemo = createSelector(
@@ -24,14 +35,6 @@ const HeroesList = () => {
     );
 
     const heroesCurrent = useSelector(heroesMemo);
-
-    const dispatch = useDispatch();
-    const {request} = useHttp();
-
-    useEffect(() => {
-        dispatch(fetchHeroes(request));
-        // eslint-disable-next-line
-    }, []);
 
     if (heroesLoadingStatus === "loading") {
         return <Spinner/>;
@@ -53,6 +56,8 @@ const HeroesList = () => {
     }
 
     const elements = renderHeroesList(heroesCurrent);
+
+    console.log('render',);
     //* return 
     return (
         <ul>
