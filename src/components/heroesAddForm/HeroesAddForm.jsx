@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-
+//* redux 
 import { heroesAdd } from '../heroesList/heroesSlice';
 import { fetchFilters } from '../heroesFilters/filtersSlice';
 
@@ -28,10 +28,9 @@ const HeroesAddForm = () => {
         const text = form.text.value;
         const element = form.element.value;
         const id = uuidv4();
-        
-        request("http://localhost:3001/heroes", "POST", JSON.stringify({id,name,text,element}))
-        .then(data => dispatch(heroesAdd(data)))
-        .catch(err => console.log('POST Error >>> ',err));
+
+        const json = JSON.stringify({id,name,text,element});
+        dispatch(heroesAdd(json));
     }
 
     const itemsOption = options.map((item,i) => {

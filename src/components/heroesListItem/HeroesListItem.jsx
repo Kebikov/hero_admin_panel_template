@@ -3,7 +3,7 @@ import { useHttp } from "../../hooks/http.hook";
 import { useDispatch } from 'react-redux';
 import { useCallback } from "react";
 
-import { heroesDelete } from '../../actions';
+import { heroesDelete } from '../heroesList/heroesSlice';
 
 const HeroesListItem = ({name, description, element, dataId}) => {
 
@@ -31,11 +31,7 @@ const HeroesListItem = ({name, description, element, dataId}) => {
     }
 
     const deleteItem = useCallback((id) => {
-        //dispatch(heroesDelete(id))
-        request(`http://localhost:3001/heroes/${id}`, 'DELETE')
-        .then(console.log('delete ok'))
-        .then(dispatch(heroesDelete(id)))
-        .catch(err => console.log('DELETE Error >>> ', err));
+        dispatch(heroesDelete(id));
     },[request]);
 
     return (

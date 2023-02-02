@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { heroesFilter } from '../../actions';
+//* redux 
+import { filtersChoiсe } from './filtersSlice';
 
 const HeroesFilters = () => {
 
@@ -13,7 +14,7 @@ const HeroesFilters = () => {
     });
     
     const choiceFilters = (choice) => {
-        dispatch(heroesFilter(choice));
+        dispatch(filtersChoiсe(choice));
     } 
 
     return (

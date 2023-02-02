@@ -9,9 +9,23 @@ const initialState = {
 export const fetchHeroes = createAsyncThunk(
     'heroes/fetchHeroes',
     () => {
-        console.log('request',);
         const {request} = useHttp();
         return request("http://localhost:3001/heroes");
+    }
+);
+
+export const heroesAdd = createAsyncThunk('heroes/heroesAdd',
+    (body) => {
+        const {request} = useHttp();
+        return request("http://localhost:3001/heroes", "POST", body);
+    }
+);
+
+export const heroesDelete = createAsyncThunk('heroes/heroesDelete',
+    async (id) => {
+        const {request} = useHttp();
+        await request(`http://localhost:3001/heroes/${id}`, "DELETE");
+        return  id;
     }
 );
 
@@ -19,15 +33,10 @@ const heroesSlice = createSlice({
     name: 'heroes',
     initialState,
     reducers: {
-        heroesDelete: (state, action) => {
-            state.heroes = state.heroes.filter(item => item.id !== action.payload);
-        },
-        heroesAdd: (state, action) => {
-            state.heroes = action.payload;
-        }
     },
     extraReducers: (builder) => {
         builder
+            //* fetchHeroes 
             .addCase(fetchHeroes.pending, state => {
                 state.heroesLoadingStatus = 'loading'
             })
@@ -36,8 +45,15 @@ const heroesSlice = createSlice({
                 state.heroes = action.payload;
             })
             .addCase(fetchHeroes.rejected, state => {
-                console.log('error',);
                 state.heroesLoadingStatus = 'error';
+            })
+            //* heroesAdd 
+            .addCase(heroesAdd.fulfilled, (state, action) => {
+                state.heroes = action.payload;
+            })
+            //* heroesDelete 
+            .addCase(heroesDelete.fulfilled, (state, action) => {
+                state.heroes = state.heroes.filter(item => item.id !== action.payload);
             })
             .addDefaultCase(() => {})
     }
@@ -46,4 +62,4 @@ const heroesSlice = createSlice({
 const {actions, reducer} = heroesSlice;
 
 export default reducer;
-export const {heroesDelete, heroesAdd} = actions;
+export const {} = actions;

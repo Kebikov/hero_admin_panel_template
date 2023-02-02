@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from '@reduxjs/toolkit';
 import Spinner from '../spinner/Spinner';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
-import { useHttp } from '../../hooks/http.hook';
 //* redux 
 import { fetchHeroes } from './heroesSlice';
 
@@ -11,11 +10,8 @@ import { fetchHeroes } from './heroesSlice';
 //= HeroesList 
 const HeroesList = () => {
     useEffect(() => {
-        console.log('use Effect',);
         dispatch(fetchHeroes());
     }, []);
-
-    const {request} = useHttp();
 
     const dispatch = useDispatch();
 
@@ -57,7 +53,6 @@ const HeroesList = () => {
 
     const elements = renderHeroesList(heroesCurrent);
 
-    console.log('render',);
     //* return 
     return (
         <ul>
